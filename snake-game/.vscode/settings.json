@@ -1,0 +1,11 @@
+{
+  "git.ignoreLimitWarning": true,
+  "editor.tabSize": 2,
+  "files.watcherExclude": {
+    "**/.git/subtree-cache/**": false,
+    "**/node_modules/**": false
+  },
+  "search.exclude": {
+    "**/node_modules": false
+  }
+}

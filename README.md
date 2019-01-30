@@ -4,7 +4,9 @@ A vanilla javascript browser game written in ES6 and vanilla css.
 
 ## How to install
 
-Unzip the provided files and run NPM install in order to run a webpack dev server which bundles and serves browser friendly javascript. The game should run on localhost:8080.
+Unzip the provided files and run NPM install in order to run a webpack dev server which bundles and serves browser friendly javascript. To start the server, run the command 'npm run dev'. The game should run on localhost:8080.
+
+You can also find the game hosted - <a href="http://jillfetherston.com/snake">here</a>
 
 ## How to play
 

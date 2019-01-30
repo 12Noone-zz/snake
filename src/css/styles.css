@@ -84,10 +84,9 @@ table {
 }
 .apple {
 	background-color: #E40066;
-	height: 25px;
-	width: 24px;
 	border-radius: 50%;
 	position: relative;
+	z-index: 5px;
 }
 .apple:before {
 	position: absolute;

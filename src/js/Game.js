@@ -28,7 +28,7 @@ class Game {
     this.startButton[0].addEventListener('click', () => {
       this.startButton[0].classList.add('remove-start-btn');
       this.renderApple();
-      this.gameTick(this.speed);
+      this.gameTick(1000);
     });
   }
 
@@ -103,10 +103,11 @@ class Game {
   checkGameSpeed() {
     const score = document.getElementById('score');
     const formattedScore = parseInt(score.innerHTML);
-    if (formattedScore % 5 === 0) {
+    if (formattedScore % 5 === 0 && this.speed > 100) {
       clearInterval(this.tick);
-      this.speed = this.speed - 50;
+      this.speed = this.speed - 100;
       this.gameTick(this.speed);
+      console.log(this.speed);
     }
   }
 

@@ -148,7 +148,7 @@ class Game {
     }
     this.startButton[0].classList.remove('remove-start-btn');
     this.user.resetScore();
-    this.snake.setUpSnake();
+    // this.snake.setUpSnake();
   }
 }
 

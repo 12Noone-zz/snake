@@ -2,7 +2,6 @@ const Snake = require('./Snake');
 const User = require('./User');
 
 class Game {
-
   constructor(domElement) {
     const keyMap = {
       39: 'RIGHT',
@@ -10,7 +9,6 @@ class Game {
       40: 'DOWN',
       38: 'UP',
     };
-
     document.addEventListener('keydown', (e) => {
       if (keyMap[e.which]) {
         this.initiateDirectionChange(keyMap[e.which]);
@@ -157,6 +155,7 @@ class Game {
     this.startButton[0].classList.remove('remove-start-btn');
     this.user.resetScore();
     this.snake.setUpSnake();
+    this.speed = 1000;
   }
 }
 

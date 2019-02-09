@@ -3,17 +3,21 @@ const User = require('./User');
 
 class Game {
   constructor(domElement) {
+    // map arrow keys to strings for humans
     const keyMap = {
       39: 'RIGHT',
       37: 'LEFT',
       40: 'DOWN',
       38: 'UP',
     };
+    // initialize event listener for keys, test for key validity
+    // call to initiate direction change if correct key
     document.addEventListener('keydown', (e) => {
       if (keyMap[e.which]) {
         this.initiateDirectionChange(keyMap[e.which]);
       }
     });
+    // initialize a snake, a user, some dom elements, define starting speed, and call initiate()
     this.snake = new Snake();
     this.user = new User();
     this.startButton = domElement.querySelectorAll('#start-btn');
@@ -22,7 +26,7 @@ class Game {
     this.initiateGame();
 
   }
-
+  // adds event listener to start button, call to render the apple and start the game clock
   initiateGame() {
     this.startButton[0].addEventListener('click', () => {
       this.startButton[0].classList.add('remove-start-btn');
@@ -31,23 +35,26 @@ class Game {
     });
   }
 
+  // if already defined, return. kept getting multiple interval loops.
   startGameTick() {
     if (this.tick) {
       return;
     }
+    // initiate game tick and begin calling the methods that run the game
     this.tick = setInterval(() => {
       this.snake.move();
       this.renderGameState();
       this.checkSnakeStatus();
     }, this.speed);
   }
-
+  
+  // a reset method good for game overs or changing game speed
   endGameTick() {
     clearInterval(this.tick);
     this.tick = null;
   }
 
-
+  // render the game state - really this just updates the snake's positioning.
   renderGameState() {
     const domSnake = document.querySelectorAll('.snake');
     domSnake.forEach((node) => {
@@ -68,10 +75,12 @@ class Game {
     });
   }
 
+  // initiates a direction change for snake
   initiateDirectionChange(direction) {
     this.snake.onDirectionChange(direction);
   }
 
+  // renders an apple in a random coordinate - does not allow for apples rendering in the same space as the snake
   renderApple() {
     const rowAxis = document.querySelectorAll('.row');
     const cellAxis = rowAxis[0].children;
@@ -88,12 +97,15 @@ class Game {
     apple.classList.add('apple');
   }
 
+  // status check method for snake activities
   checkSnakeStatus() {
     this.didSnakeEatAnApple();
     this.didSnakeHitAWall();
     this.didSnakeEatItself();
   }
 
+  // checks if snake head collided with an apple
+  // if so, removes the apple, increases the score, and (possibly) the game speed
   didSnakeEatAnApple() {
     const snakeHead = document.querySelector('.head') || undefined;
     if (snakeHead) {
@@ -107,6 +119,7 @@ class Game {
     }
   }
 
+  // update game speed if the score is a multiple of 5 and game speed is currently above 100 MS. intervals aren't a fan of negative integers turns out
   updateGameSpeed() {
     const score = document.getElementById('score');
     const formattedScore = parseInt(score.innerHTML);
@@ -117,6 +130,8 @@ class Game {
     }
   }
 
+  // identifies the walls of the game
+  // and tests current snake coordinates against boundaries for collisions
   didSnakeHitAWall() {
     const rowAxis = document.querySelectorAll('.row');
     const cellAxis = rowAxis[0].children;
@@ -130,6 +145,8 @@ class Game {
     }
   }
 
+  // defines snake's head and tests if snake head has collided with snake body
+  // calls to game over if so
   didSnakeEatItself() {
     const snakeHeadLocation = this.snake.segments[this.snake.segments.length - 1];
     this.snake.segments.forEach((segment, idx) => {
@@ -141,6 +158,8 @@ class Game {
     });
   }
 
+  // game over.
+  // ends game interval, removes the snake and apple, adds the start button back in, resets the user, rests the snake, and resets game speed.
   gameOver() {
     this.endGameTick();
     const domSnake = document.querySelectorAll('.snake');

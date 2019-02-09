@@ -20,7 +20,7 @@ class Game {
     this.user = new User();
     this.startButton = domElement.querySelectorAll('#start-btn');
     this.allRows = domElement.querySelectorAll('.row');
-    this.speed = 500;
+    this.speed = 1000;
     this.initiateGame();
 
   }

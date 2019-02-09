@@ -20,24 +20,33 @@ class Game {
     this.user = new User();
     this.startButton = domElement.querySelectorAll('#start-btn');
     this.allRows = domElement.querySelectorAll('.row');
-    this.speed = 1000;
+    this.speed = 500;
     this.initiateGame();
+
   }
 
   initiateGame() {
     this.startButton[0].addEventListener('click', () => {
       this.startButton[0].classList.add('remove-start-btn');
       this.renderApple();
-      this.gameTick(1000);
+      this.startGameTick();
     });
   }
 
-  gameTick(speed) {
+  startGameTick() {
+    if (this.tick) {
+      return;
+    }
     this.tick = setInterval(() => {
       this.snake.move();
       this.renderGameState();
       this.checkSnakeStatus();
-    }, speed);
+    }, this.speed);
+  }
+
+  endGameTick() {
+    clearInterval(this.tick);
+    this.tick = null;
   }
 
 
@@ -95,19 +104,18 @@ class Game {
         snakeHead.classList.remove('apple');
         this.renderApple();
         this.user.updateScore();
-        this.checkGameSpeed();
+        this.updateGameSpeed();
       }
     }
   }
 
-  checkGameSpeed() {
+  updateGameSpeed() {
     const score = document.getElementById('score');
     const formattedScore = parseInt(score.innerHTML);
     if (formattedScore % 5 === 0 && this.speed > 100) {
-      clearInterval(this.tick);
+      this.endGameTick();
       this.speed = this.speed - 100;
-      this.gameTick(this.speed);
-      console.log(this.speed);
+      this.startGameTick();
     }
   }
 
@@ -136,7 +144,7 @@ class Game {
   }
 
   gameOver() {
-    clearInterval(this.gameTick);
+    this.endGameTick();
     const domSnake = document.querySelectorAll('.snake');
     const apple = document.querySelector('.apple');
     domSnake.forEach((node) => {
@@ -148,11 +156,11 @@ class Game {
     }
     this.startButton[0].classList.remove('remove-start-btn');
     this.user.resetScore();
-    // this.snake.setUpSnake();
+    this.snake.setUpSnake();
   }
 }
 
 const gameBoard = document.querySelectorAll('#snake-game')[0];
 const game = new Game(gameBoard);
-
+window.game = game;
 module.exports = game;

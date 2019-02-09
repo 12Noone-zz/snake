@@ -1,15 +1,7 @@
 class Snake {
 
   constructor() {
-
-    this.segments = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
-      { x: 2, y: 0 },
-      { x: 3, y: 0 },
-      { x: 4, y: 0 },
-    ];
-    this.direction = 'RIGHT';
+    this.setUpSnake();
   }
 
   move() {
@@ -56,6 +48,17 @@ class Snake {
   eat() {
     const lastSegment = this.segments[this.segments.length - 1];
     this.segments.unshift({ x: lastSegment, y: lastSegment });
+  }
+
+  setUpSnake() {
+    this.segments = [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 2, y: 0 },
+      { x: 3, y: 0 },
+      { x: 4, y: 0 },
+    ];
+    this.direction = 'RIGHT';
   }
 }
 
